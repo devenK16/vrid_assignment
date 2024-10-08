@@ -2,6 +2,7 @@ package com.example.vrid_assignment.data.model
 
 data class BlogPost(
     val id: Int,
+    val date: String,
     val title: Title,
     val link: String
 )

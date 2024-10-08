@@ -18,13 +18,22 @@ class BlogListViewModel @Inject constructor(
     private val _blogs = MutableStateFlow<List<BlogPost>>(emptyList())
     val blogs: StateFlow<List<BlogPost>> = _blogs
 
+    private var currentPage = 1
+    private val perPage = 10
+
     init {
+        loadBlogs()
+    }
+
+    fun loadMoreBlogs() {
+        currentPage++
         loadBlogs()
     }
 
     private fun loadBlogs() {
         viewModelScope.launch {
-            _blogs.value = repository.getBlogPosts(1, 10)
+            val newBlogs = repository.getBlogPosts(currentPage, perPage)
+            _blogs.value += newBlogs
         }
     }
 }
